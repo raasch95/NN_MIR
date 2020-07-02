@@ -65,7 +65,10 @@ if __name__ == '__main__':
         plt.subplot(3,3,i+1)
         plt.tight_layout()
         plt.imshow(x_test_raw[i], cmap='gray', interpolation='none')
-        result_array = model.predict(np.expand_dims(x_test[i], axis=0))
+        # result comes back as an array containing prediction for all classes
+        # therefore we must do some work to extract the most likely class
+        one_image = np.expand_dims(x_test[i], axis=0) # one dimensions must be added because we are using batches
+        result_array = model.predict(one_image)
         max_result = 0
         predicted_number = 0
         for index, result in enumerate(result_array[0]):
